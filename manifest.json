@@ -3,20 +3,20 @@
     "name": "Lab 6 List App",
     "icons": [
       {
-        "src": "/192x192.png",
+        "src": "/it202-lab6/192x192.png",
         "type": "image/png",
         "sizes": "192x192"
       },
       {
-        "src": "/512x512.png",
+        "src": "/it202-lab6/512x512.png",
         "type": "image/png",
         "sizes": "512x512"
       }
     ],
     "prefer_related_applications": false,
-    "start_url": "/index.html",
+    "start_url": "/it202-lab6/index.html",
     "background_color": "#363636",
     "display": "standalone",
-    "scope": "/",
+    "scope": "/it202-lab6/",
     "theme_color": "#363636"
   }
