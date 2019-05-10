@@ -4,62 +4,192 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
-	<title>3 screen app</title>
+  <title>Food List</title>
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+  <link rel="manifest" href="manifest.json">
+  <meta name="description" content="A sample list app">
+  <meta name="theme-color" content="#363636" />
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-	 crossorigin="anonymous">
+   crossorigin="anonymous">
+  <link rel="stylesheet" href="./styles.css">
 
-   <script src="https://unpkg.com/dexie@latest/dist/dexie.js"></script>
-
-	<style>
-		.content {
-			display: none;
-			margin: 1em;
-		}
-	</style>
+  <script src="https://unpkg.com/dexie@latest/dist/dexie.js"></script>
 
 </head>
 
 <body>
-	<nav class="navbar navbar-expand-lg navbar-light bg-light">
-		<a class="navbar-brand" href="#">Navbar</a>
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-5">
+		<a class="navbar-brand" href="#">Food Savvy</a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
     </button>
   <div class="collapse navbar-collapse" id="navbarNav">
     <ul class="navbar-nav">
       <li class="nav-item">
-        <a class="nav-link" href="#home">Home <span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="#home">Home<span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#screen2">Screen 2</a>
+        <a class="nav-link" href="#allItems">All Items</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#screen3">Screen 3</a>
+        <a class="nav-link" id="btnAdd">Install Me?</a>
       </li>
     </ul>
   </div>
   </nav>
 <!-- End of Nav -->
 
+<!-- <button id="btnAdd" class="btn btn-outline-success float-right sticky-top">Install Me</button> -->
+
+
   <div class="content container" id="home">
-    <form id="myForm">
-      <input type="text" id="name" placeholder="Enter your name">
-      <input type="text" id="age" placeholder="Enter your age">      
-    </form>
-      <button id="getFormData">Get Form Data</button>
+    <section class="row mb-5">
+      <form id="createForm" class="col-12">
+        <div class="form-group text-center">
+          <label class="" for="foodInput"><h1>What do you have?</h1></label>
+          <div class="row">
+            <section class="col-12 mb-3">
+              <input type="text" class="form-control" id="foodInputName" aria-describedby="foodInputName" placeholder="Ex: Apples, Eggs, Cheese" required>
+            </section>
+          </div>
+          <div class="row">
+            <section class="col">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">#</span>
+                    </div>
+                    <input type="number" class="form-control" id="foodInputAmount" required>
+                  </div>
+            </section>
+            <section class="col-12 col-sm-8 col-md text-truncate">
+                <div class="btn-group btn-group-toggle mb-3" id="inputToggle" data-toggle="buttons">
+                </div>
+            </section>
+          </div>
+          <div class="row">
+            <section class="col">
+              <button type="submit" id="createBtn" class="btn btn-outline-success w-100">Add</button>
+            </section>
+          </div>
+        </div>
+      </form>
+    </section>
+    
+    <section class="row mb-5">
+      <div id="accordion" class="col">
+        <div class="card">
+          <div class="card-header" id="breakfastPreview">
+            <h5 class="mb-0">
+              <button class="btn btn-link w-100 collapsed" data-toggle="collapse" data-target="#breakfastCol" aria-expanded="true" aria-controls="breakfastCol">
+                Breakfast Foods
+              </button>
+            </h5>
+          </div>
+
+          <div id="breakfastCol" class="collapse" aria-labelledby="breakfastPreview" data-parent="#accordion">
+            <div id="breakfastList" class="card-body">
+              <div class="list-group list-group-flush">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header" id="lunchDinnerPreview">
+            <h5 class="mb-0">
+              <button class="btn btn-link collapsed w-100" data-toggle="collapse" data-target="#lunchDinnerCol" aria-expanded="false" aria-controls="lunchDinnerCol">
+                Lunch/Dinner Foods
+              </button>
+            </h5>
+          </div>
+          <div id="lunchDinnerCol" class="collapse" aria-labelledby="lunchDinnerPreview" data-parent="#accordion">
+            <div id="lunDinList" class="card-body">
+              <div class="list-group list-group-flush">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header" id="drinksPreview">
+            <h5 class="mb-0">
+              <button class="btn btn-link collapsed w-100" data-toggle="collapse" data-target="#drinksCol" aria-expanded="false" aria-controls="drinksCol">
+                Drinks
+              </button>
+            </h5>
+          </div>
+          <div id="drinksCol" class="collapse" aria-labelledby="drinksPreview" data-parent="#accordion">
+            <div id="drinksList" class="card-body">
+              <div class="list-group list-group-flush">
+              </div>
+            </div>
+          </div>
+          <div class="card">
+              <div class="card-header" id="snacksPreview">
+                <h5 class="mb-0">
+                  <button class="btn btn-link w-100 collapsed" data-toggle="collapse" data-target="#snacksCol" aria-expanded="true" aria-controls="snacksCol">
+                    Snacks
+                  </button>
+                </h5>
+              </div>
+    
+              <div id="snacksCol" class="collapse" aria-labelledby="snacksPreview" data-parent="#accordion">
+                <div id="snacksList" class="card-body">
+                  <div class="list-group list-group-flush">
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+      </div>
+    </section>
   </div>
 <!-- End of Home Screen -->
 
-  <div class="content container" id="screen2">
-    <section id="list">
+  <div class="content container mb-4" id="allItems">
+    <h1 class="text-center mb-5">All Produce List</h1>
+    <h3 class="mb-2">All Foods</h3>
+    <section id="allFoodsList" class="text-center list-group list-group-flush mb-5">
+    </section>
+    <h3 class="mb-2">All Drinks</h3>
+    <section id="allDrinksList" class="text-center list-group list-group-flush">
     </section>
   </div>
+<!-- End of All List Screen -->
 
-  <div class="content container" id="screen3">
-    This is screen 3
+  <div class="content container text-center detailScreen" id="detailScreen">
+    <h1 class="mb-5">Item Details</h1>
+    <section id="detailContent"></section>
+    <button type="button" class="btn btn-warning mb-4" id="editBtn">Edit Item</button>
   </div>
 
+<!-- End of Detail List Screen -->
 
+<div class="modal fade" id="mainModal" tabindex="-1" role="dialog" aria-labelledby="mainModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="mainModalLabel"></h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          
+        </div>
+        <div class="modal-footer">
+          <button type="button" id="modalSecondary" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" id="modalPrimary" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- End of Modal -->
+
+<footer id="footer" class="">
+  <nav class="navbar navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">Made by Tykki</a>
+  </nav>
+</footer>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
       
@@ -67,46 +197,19 @@
       // register the service worker for offline use
       if('serviceWorker' in navigator) {
         navigator.serviceWorker
-                  .register('./sw.js')
-                  .then(function() { console.log("Service Worker Registered"); });
+          .register('./sw.js')
+          .then(function() { console.log("Service Worker Registered"); });
       }
   </script>
     
+  <script src="db.js"></script>
+  <script src="app.js"></script>
+
   <script>
-    $(document).ready(function() {
+$(document).ready(function() {
+    
 
-      // Define your database
-      var db = new Dexie("friend_database");
-      db.version(1).stores({
-          friends: 'name,shoeSize,age'
-      });
-
-      // Put some data into it
-      db.friends.put({name: "Dave", shoeSize: 10, age: 58});
-      db.friends.put({name: "Nicolas", shoeSize: 8, age: 22});
-
-      // Display Data
-      db.friends.each(function(friend){
-        console.log(friend.name);
-        document.getElementById("list").innerHTML += "<p>" + friend.name + "<br>" + friend.shoeSize + "</p>";
-      });
-
-      function hideScreens() {
-        $(".content").hide();
-      }
-      $('#home').show()
-      $(".nav-link").on("click", function(){
-        hideScreens();
-        var target = $(this).attr("href");
-        $(target).show();
-      });
-      // event handler
-      $("#getFormData").on("click", function() {
-        $("body").append($("<hr>"));  
-        $("body").append($("#name").val());
-        $("body").append($("<br>"));
-        $("body").append($("#age").val());
-      });
+      
 
     });
   </script>

@@ -17,7 +17,7 @@
 
 version = '1.1';
 
-let cacheName = 'pwaBasic_' + version;
+let cacheName = 'List_App' + version;
 
 self.addEventListener('install', e => {
   let timeStamp = Date.now();
@@ -25,7 +25,15 @@ self.addEventListener('install', e => {
     caches.open(cacheName).then(cache => {
       return cache.addAll([
         `./`,
-        `./index.html`
+        `./index.html`,
+        './db.js',
+        './styles.css',
+        './app.js',
+        './sw.js',
+        './favicon.ico',
+        './manifest.json',
+        './192x192.png',
+        './512x512.png'
       ])
       .then(() => self.skipWaiting());
     })
